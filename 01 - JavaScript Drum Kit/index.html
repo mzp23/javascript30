@@ -59,13 +59,16 @@
       const audioArr = document.querySelectorAll("audio");
       body.addEventListener("keydown", e => {
         let key = e.keyCode;
+
         audioArr.forEach(e => {
           if (key == e.dataset.key) {
+            e.currentTime = 0;
+            let activeDiv = document.querySelector(`div [data-key="${key}"]`);
+            activeDiv.classList.add("playing");
             e.play();
-            if (key == e.dataset.key) {
-              e.currentTime = 0;
-              e.play();
-            }
+            setTimeout(() => {
+              activeDiv.classList.remove("playing");
+            }, 60);
           }
         });
       });
