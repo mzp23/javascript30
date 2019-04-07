@@ -85,7 +85,6 @@
     const inputs = [].slice.call(document.querySelectorAll('input'));
     inputs.forEach(input => input.addEventListener('change', handleUpdate));
     inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
-    inputs.forEach(input => input.addEventListener('load', handleUpdate));
 
     function handleUpdate(e) {
       if (this.id === 'spacing') {
