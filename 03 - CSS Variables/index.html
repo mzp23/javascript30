@@ -14,7 +14,7 @@
     <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
 
     <label for="blur">Blur:</label>
-    <input id="blur" class="range1" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
 
     <label for="base">Base Color</label>
     <input id="base" type="color" name="base" value="#ffff00"> </div>
@@ -22,6 +22,12 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    :root {
+      --blur: blur(10px);
+      --spacing: 10px;
+      --baseColor: #ffc600;
+    }
+
     /*
       misc styles, nothing to do with CSS variables
     */
@@ -46,17 +52,18 @@
     }
 
     img {
-      filter: blur(1px);
-      background-color: #ffff00;
-      padding: 10px;
+      filter: var(--blur);
+      background-color: var(--baseColor);
+      padding: var(--spacing);
     }
 
     .hl {
-      color: #ffff00;
+      color: var(--baseColor);
     }
   </style>
 
   <script>
+    /* Style update 
     const img = document.querySelector('img');
     const base = document.getElementById('base');
     const spacing = document.getElementById('spacing');
@@ -72,6 +79,25 @@
     spacing.addEventListener('input', () => {
       img.style.padding = `${spacing.value}px`;
     })
+    */
+
+    // Sloution for css variables
+    const body = document.querySelector('body');
+    const inputs = [].slice.call(document.querySelectorAll('input'));
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+    inputs.forEach(input => input.addEventListener('load', handleUpdate));
+
+    function handleUpdate(e) {
+      if (this.id === 'spacing') {
+        body.style.setProperty('--spacing', `${this.value}px`);
+      } else if (this.id === 'blur') {
+        body.style.setProperty('--blur', `blur(${this.value}px`)
+      } else if (this.type === 'color') {
+        body.style.setProperty('--baseColor', this.value)
+
+      }
+    }
   </script>
 
 </body>
